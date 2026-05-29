@@ -127,6 +127,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'pentest' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/pentest.log'),
+        'level' => 'info',
+    ],
+
     ],
 
 ];

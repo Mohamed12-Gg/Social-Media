@@ -298,8 +298,8 @@
     {{-- Header --}}
     <header class="navbar sticky-top flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="{{ route('admin') }}">
-    <i class="bi bi-people-fill me-2"></i>Social Media
-</a>
+            <i class="bi bi-people-fill me-2"></i>Social Media
+        </a>
 
         <ul class="navbar-nav flex-row d-md-none">
             <li class="nav-item text-nowrap">
@@ -347,6 +347,15 @@
                                         <use xlink:href="#file-earmark"></use>
                                     </svg>
                                     Posts
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('admin.security.*') ? 'active' : '' }}"
+                                    href="{{ route('security.logs') }}">
+                                    <i class="bi bi-shield-slash text-danger"
+                                        style="font-size: 1.1rem; width: 20px; height: 20px;"></i>
+                                    Security Logs
                                 </a>
                             </li>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SecurityLogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
@@ -9,6 +10,14 @@ use App\Http\Controllers\website\LikeController;
 use App\Http\Controllers\website\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+
+Route::middleware(['auth', 'isLogin'])->prefix('admin')->group(function () {
+    // ... مسارات الأدمن الأخرى ...
+
+    Route::get('/security-logs', [SecurityLogController::class, 'index'])->name('security.logs');
+    Route::delete('/security-logs/clear', [SecurityLogController::class, 'clear'])->name('admin.security.clear');
+});
 
 
 
