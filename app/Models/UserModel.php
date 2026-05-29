@@ -20,7 +20,8 @@ class UserModel extends Model
 
     ];
 
-    public function post(){
-        return $this->hasOne(Post::class);
+    public function posts()  // ✅ hasMany مش hasOne
+    {
+        return $this->hasMany(Post::class);
     }
 }
