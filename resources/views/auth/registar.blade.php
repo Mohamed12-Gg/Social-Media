@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Register (Dark) · Laravel</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -54,6 +54,13 @@
             border-top-right-radius: 10px;
         }
 
+        /* تنسيق مخصص لحقل الصورة ليتناسب مع الحقول المتصلة */
+        .form-register .input-image {
+            border-radius: 0;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+        }
+
         .form-register .input-bottom {
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
@@ -88,28 +95,28 @@
 <body class="d-flex align-items-center py-4">
 
     <main class="form-register w-100 m-auto text-center">
-        <form action="{{ route('register') }}" method="POST" novalidate>
+        <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
 
             <div class="logo-placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
+                    class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                    <path fill-rule="evenodd"
+                        d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5" />
                 </svg>
             </div>
 
             <h1 class="h3 mb-4 fw-bold text-white">Create Account</h1>
 
-            @if(session('msg'))
+            @if (session('msg'))
                 <div class="alert alert-danger py-2 small border-0 bg-danger bg-opacity-25 text-danger">
                     {{ session('msg') }}
                 </div>
             @endif
 
-            <!-- Name -->
             <div class="form-floating">
-                <input name="name" type="text"
-                    class="form-control input-top @error('name') is-invalid @enderror"
+                <input name="name" type="text" class="form-control input-top @error('name') is-invalid @enderror"
                     id="floatingName" placeholder="Full Name" value="{{ old('name') }}" required autofocus />
                 <label for="floatingName">Full Name</label>
                 @error('name')
@@ -117,10 +124,8 @@
                 @enderror
             </div>
 
-            <!-- Email -->
             <div class="form-floating">
-                <input name="email" type="email"
-                    class="form-control @error('email') is-invalid @enderror"
+                <input name="email" type="email" class="form-control @error('email') is-invalid @enderror"
                     id="floatingEmail" placeholder="name@example.com" value="{{ old('email') }}" required />
                 <label for="floatingEmail">Email address</label>
                 @error('email')
@@ -128,10 +133,8 @@
                 @enderror
             </div>
 
-            <!-- Phone -->
             <div class="form-floating">
-                <input name="phone" type="tel"
-                    class="form-control @error('phone') is-invalid @enderror"
+                <input name="phone" type="tel" class="form-control @error('phone') is-invalid @enderror"
                     id="floatingPhone" placeholder="Phone Number" value="{{ old('phone') }}" required />
                 <label for="floatingPhone">Phone Number</label>
                 @error('phone')
@@ -139,10 +142,16 @@
                 @enderror
             </div>
 
-            <!-- Password -->
+            <div>
+                <input name="image" type="file" class="form-control input-image @error('image') is-invalid @enderror"
+                    id="floatingImage" accept="image/*" />
+                @error('image')
+                    <div class="invalid-feedback text-start">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-floating">
-                <input name="password" type="password"
-                    class="form-control @error('password') is-invalid @enderror"
+                <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"
                     id="floatingPassword" placeholder="Password" required />
                 <label for="floatingPassword">Password</label>
                 @error('password')
@@ -150,7 +159,6 @@
                 @enderror
             </div>
 
-            <!-- Confirm Password -->
             <div class="form-floating">
                 <input name="password_confirmation" type="password"
                     class="form-control input-bottom @error('password_confirmation') is-invalid @enderror"
@@ -164,14 +172,14 @@
             <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Create Account</button>
 
             <p class="mb-0 text-body-secondary">
-                Already have an account? <a href="{{ route('login') }}" class="text-decoration-none fw-medium">Login</a>
+                Already have an account? <a href="{{ route('login') }}"
+                    class="text-decoration-none fw-medium">Login</a>
             </p>
 
             <p class="mt-4 mb-0 text-body-secondary small">&copy; {{ date('Y') }} Secure Registration</p>
         </form>
     </main>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

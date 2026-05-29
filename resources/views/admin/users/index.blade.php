@@ -105,6 +105,10 @@
                 </tbody>
             </table>
         </div>
+        {{-- أزرار الأسهم للتنقل بين الصفحات (تظهر فقط إذا كان عدد المستخدمين أكثر من 5) --}}
+        <div class="d-flex justify-content-center mt-4">
+            {{ $users->links('pagination::bootstrap-5') }}
+        </div>
         </div>
     </main>
 @endsection

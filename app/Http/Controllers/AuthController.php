@@ -62,7 +62,8 @@ class AuthController extends Controller
         $data =  $request->validate([
             'name'                  => 'required|string|min:3',
             'email'                 => 'required|email|unique:users,email',
-            'phone'                 => 'nullable|string|max:15|unique:users,phone',
+            'phone'                 => 'required|string|max:11|unique:users,phone',
+            'image'                 => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'password'              => 'required|min:8|max:50|confirmed',
             'password_confirmation' => 'required',
         ], [
@@ -77,8 +78,15 @@ class AuthController extends Controller
             'email.unique'   => 'Email already exists',
 
             // Phone
-            'phone.max'    => 'Phone must be less than 15 digits',
-            'phone.unique' => 'Phone number already exists',
+            'phone.required' => 'Please enter your phone',
+            'phone.max'      => 'Phone must be less than 11 digits',
+            'phone.unique'   => 'Phone number already exists',
+
+            // Image
+            'image.required' => 'Please upload an image.',
+            'image.image'    => 'Uploaded file must be an image.',
+            'image.mimes'    => 'Image must be JPG, JPEG, PNG, or WEBP.',
+            'image.max'      => 'Image size must not exceed 2MB.',
 
             // Password
             'password.required'  => 'Please enter your password',
@@ -90,6 +98,14 @@ class AuthController extends Controller
             'password_confirmation.required' => 'Please confirm your password',
 
         ]);
+
+        // Create Image
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . "_" . $file->getClientOriginalName();
+            $path = $file->storeAs('images',$fileName,'public');
+            $data['image'] = $path;
+         }
         $data['password'] = Hash::make($data['password']);
 
         UserModel::create($data);

@@ -17,7 +17,7 @@ class UserController extends Controller
         if (Auth::user()->role === 'subscriber') {
         return redirect()->route('home');
     }
-        $users = UserModel::all();
+        $users = UserModel::paginate(2);
         return view('admin.users.index',compact('users'));
     }
 
