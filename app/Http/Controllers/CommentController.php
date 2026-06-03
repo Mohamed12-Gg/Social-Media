@@ -34,12 +34,14 @@ class CommentController extends Controller
         $request->validate([
             'comment' => 'required|string|max:500',
             'post_id' => 'required|exists:posts,id',
+
         ]);
 
         Comment::create([
             'comment' => $request->comment,
             'post_id' => $request->post_id,
             'user_id' => Auth::id(),
+            'parent_id' => $request->parent_id ?? null,
         ]);
 
         return back()->with('msg', 'Comment Added Successfully');

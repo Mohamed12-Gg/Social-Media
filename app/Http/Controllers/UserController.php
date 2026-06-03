@@ -17,7 +17,7 @@ class UserController extends Controller
         if (Auth::user()->role === 'subscriber') {
         return redirect()->route('home');
     }
-        $users = UserModel::paginate(2);
+        $users = UserModel::paginate(5);
         return view('admin.users.index',compact('users'));
     }
 
@@ -84,12 +84,16 @@ public function store(Request $request)
 
 
     // Create Image
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . "_" . $file->getClientOriginalName();
-            $path = $file->storeAs('images',$fileName,'public');
-            $data['image'] = $path;
-         }
+if ($request->hasFile('image')) {
+    $file = $request->file('image');
+    $fileName = time() . "_" . $file->getClientOriginalName();
+
+    // نقل الملف مباشرة إلى htdocs/storage/images
+    $file->move(public_path('storage/images'), $fileName);
+
+    // حفظ المسار في قاعدة البيانات بنفس الشكل القديم عشان الـ proxy يشوفه
+    $data['image'] = "images/" . $fileName;
+}
 
         //  return $data;
 

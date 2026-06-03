@@ -394,9 +394,10 @@
                         <img id="imagePreview" src="" alt="" class="rounded"
                             style="width: 60px; height: 60px; object-fit: cover; display: none;">
 
-                       <label for="imageInput" class="btn btn-dark px-3 rounded-pill" style="cursor:pointer;">
-    <i class="bi bi-image-fill text-success"></i> Photo <small class="text-secondary">(optional)</small>
-</label>
+                        <label for="imageInput" class="btn btn-dark px-3 rounded-pill" style="cursor:pointer;">
+                            <i class="bi bi-image-fill text-success"></i> Photo <small
+                                class="text-secondary">(optional)</small>
+                        </label>
                         <input type="file" name="image" id="imageInput" hidden accept="image/*">
 
                         @if (session('msg'))
@@ -454,9 +455,10 @@
 
                 <!-- Stats -->
                 <div class="fb-post-stats">
+                    <span>👍 <span id="likeCount{{ $post->id }}">{{ $post->likes->count() }}</span> Likes</span>
                     <span>💬 <span id="commentCount{{ $post->id }}">{{ $post->comments->count() }}</span>
                         Comments</span>
-                    <span>👍 <span id="likeCount{{ $post->id }}">{{ $post->likes->count() }}</span> Likes</span>
+
                 </div>
 
                 <!-- Actions -->
@@ -479,7 +481,7 @@
                     {{-- Comment --}}
                     <button class="fb-action-btn"
                         onclick="document.getElementById('commentInput{{ $post->id }}').focus()">
-                        💬 Comment
+                        💬 Comment {{ $post->comments->count() }}
                     </button>
 
                     {{-- Share --}}
@@ -495,7 +497,7 @@
 
                     {{-- Comments List --}}
                     <div id="commentsList{{ $post->id }}">
-                        @foreach ($post->comments as $comment)
+                        @foreach ($post->comments->whereNull('parent_id') as $comment)
                             <div class="fb-comment">
                                 @if ($comment->user && $comment->user->image)
                                     <img src="{{ asset('storage/' . $comment->user->image) }}"
@@ -505,13 +507,103 @@
                                         {{ strtoupper(substr($comment->user->name ?? 'U', 0, 1)) }}
                                     </div>
                                 @endif
-                                <div>
+                                <div class="flex-grow-1">
                                     <div class="fb-comment-bubble">
                                         <strong>{{ $comment->user->name ?? 'Unknown' }}</strong>
                                         <span>{{ $comment->comment }}</span>
                                     </div>
-                                    <div class="fb-comment-time">{{ $comment->created_at->diffForHumans() }}</div>
+                                    <div class="d-flex align-items-center gap-3 mt-1 ps-2">
+                                        <span
+                                            class="fb-comment-time">{{ $comment->created_at->diffForHumans() }}</span>
+                                        @if ($comment->user_id !== Auth::id())
+                                            {{-- جديد --}}
+                                            <span
+                                                style="font-size:0.75rem; color: var(--fb-blue); cursor:pointer; font-weight:600;"
+                                                onclick="const el = document.getElementById('replyInput{{ $comment->id }}'); el.style.display = el.style.display === 'none' ? 'flex' : 'none'">
+                                                Reply
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    {{-- فورم الـ Reply --}}
+                                    <div id="replyInput{{ $comment->id }}" class="fb-comment-input mt-1"
+                                        style="display:none;">
+                                        <form action="{{ route('comment.store') }}" method="POST"
+                                            class="d-flex gap-2 w-100">
+                                            @csrf
+                                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                            <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                            <input type="text" name="comment" placeholder="Write a reply..."
+                                                style="flex:1; background: var(--fb-hover); border:none; border-radius:20px; padding: 6px 14px; color: var(--fb-text); font-size:0.8rem; outline:none;">
+                                            <button type="submit"
+                                                style="background:transparent; border:none; color: var(--fb-blue); font-size:1.1rem; cursor:pointer;">➤</button>
+                                        </form>
+                                    </div>
+
+                                    {{-- الـ Replies --}}
+                                    @foreach ($comment->replies as $reply)
+                                        <div class="d-flex align-items-start gap-2 mt-2 p-2 rounded-3"
+                                            style="background: rgba(255,255,255,0.03); margin-left: 10px;">
+                                            <div class="rounded-circle overflow-hidden border border-secondary flex-shrink-0"
+                                                style="width: 28px; height: 28px;">
+                                                @if ($reply->user && $reply->user->image)
+                                                    <img src="{{ asset('storage/' . $reply->user->image) }}"
+                                                        class="w-100 h-100" style="object-fit: cover;">
+                                                @else
+                                                    <div
+                                                        class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary">
+                                                        <span class="text-white fw-bold" style="font-size: 0.65rem;">
+                                                            {{ strtoupper(substr($reply->user->name ?? 'U', 0, 1)) }}
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <strong class="text-info" style="font-size: 0.8rem;">
+                                                    {{ $reply->user->name ?? 'Unknown' }}
+                                                </strong>
+                                                <small
+                                                    class="text-secondary ms-1">{{ $reply->created_at->diffForHumans() }}</small>
+                                                <p class="text-white-50 m-0 mb-1" style="font-size: 0.85rem;">
+                                                    {{ $reply->comment }}</p>
+
+                                                @if ($reply->user_id !== Auth::id())
+                                                    {{-- زر Reply على الـ reply --}}
+                                                    <span
+                                                        style="font-size:0.75rem; color: var(--fb-blue); cursor:pointer; font-weight:600;"
+                                                        onclick="const el = document.getElementById('replyOnReply{{ $reply->id }}'); el.style.display = el.style.display === 'none' ? 'block' : 'none'">
+                                                        Reply
+                                                    </span>
+                                                @endif
+
+                                                {{-- فورم الـ Reply على الـ reply --}}
+                                                <div id="replyOnReply{{ $reply->id }}" style="display:none;"
+                                                    class="mt-1">
+                                                    <form action="{{ route('comment.store') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="post_id"
+                                                            value="{{ $post->id }}">
+                                                        <input type="hidden" name="parent_id"
+                                                            value="{{ $comment->id }}">
+                                                        <div class="d-flex gap-2">
+                                                            <input type="text" name="comment"
+                                                                placeholder="Write a reply..."
+                                                                class="form-control form-control-sm bg-dark border-secondary text-white"
+                                                                style="border-radius: 10px;">
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-primary text-nowrap">
+                                                                <i class="bi bi-send"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
+
+
                             </div>
                         @endforeach
                     </div>

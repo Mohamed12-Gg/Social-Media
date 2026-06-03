@@ -65,7 +65,7 @@ class AuthController extends Controller
             'phone'                 => 'required|string|max:11|unique:users,phone',
             'image'                 => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'password'              => 'required|min:8|max:50|confirmed',
-            'password_confirmation' => 'required',
+
         ], [
             // Name
             'name.required' => 'Please enter your name',
@@ -78,9 +78,9 @@ class AuthController extends Controller
             'email.unique'   => 'Email already exists',
 
             // Phone
-            'phone.required' => 'Please enter your phone',
-            'phone.max'      => 'Phone must be less than 11 digits',
-            'phone.unique'   => 'Phone number already exists',
+            'phone.required'    => 'Please enter your phone',
+            'phone.max'    => 'Phone must be less than 11 digits',
+            'phone.unique' => 'Phone number already exists',
 
             // Image
             'image.required' => 'Please upload an image.',
@@ -88,14 +88,14 @@ class AuthController extends Controller
             'image.mimes'    => 'Image must be JPG, JPEG, PNG, or WEBP.',
             'image.max'      => 'Image size must not exceed 2MB.',
 
+
             // Password
             'password.required'  => 'Please enter your password',
             'password.min'       => 'Password must be at least 8 characters',
             'password.max'       => 'Password must be less than 50 characters',
             'password.confirmed' => 'Passwords do not match',
 
-            // Confirm Password
-            'password_confirmation.required' => 'Please confirm your password',
+
 
         ]);
 
@@ -106,6 +106,7 @@ class AuthController extends Controller
             $path = $file->storeAs('images',$fileName,'public');
             $data['image'] = $path;
          }
+
         $data['password'] = Hash::make($data['password']);
 
         UserModel::create($data);
