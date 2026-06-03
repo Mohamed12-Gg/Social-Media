@@ -24,11 +24,13 @@
             overflow-x: hidden;
         }
 
-        /* Navbar */
+        /* ===== NAVBAR ===== */
         .navbar {
-            background: rgba(0, 0, 0, 0.8) !important;
+            background: rgba(0, 0, 0, 0.85) !important;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
+            height: 56px;
+            padding: 0 16px !important;
         }
 
         .navbar-brand {
@@ -37,57 +39,156 @@
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-size: 1rem !important;
         }
 
-        /* Sidebar */
-        .sidebar {
-            background: rgba(0, 0, 0, 0.4) !important;
-            backdrop-filter: blur(10px);
-            border-right: 1px solid var(--glass-border) !important;
-            min-height: calc(100vh - 56px);
-            z-index: 100;
-        }
-
-        .nav-link {
-            color: rgba(255, 255, 255, 0.7) !important;
+        /* Mobile menu toggle button */
+        .navbar-toggler-custom {
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
             border-radius: 8px;
-            margin: 4px 8px;
-            padding: 12px 16px !important;
+            color: #fff;
+            padding: 6px 10px;
+            font-size: 1.2rem;
+            line-height: 1;
+            cursor: pointer;
             transition: all 0.3s ease;
+        }
+        .navbar-toggler-custom:hover {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        /* ===== LAYOUT WRAPPER ===== */
+        .layout-wrapper {
+            display: flex;
+            min-height: calc(100vh - 56px);
+            position: relative;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            padding: 16px 0;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 200;
+        }
+
+        /* Desktop: always visible */
+        @media (min-width: 768px) {
+            .sidebar {
+                transform: translateX(0) !important;
+            }
+            .sidebar-overlay {
+                display: none !important;
+            }
+        }
+
+        /* Mobile: hidden by default, slides in */
+        @media (max-width: 767.98px) {
+            .sidebar {
+                position: fixed;
+                top: 56px;
+                left: 0;
+                height: calc(100vh - 56px);
+                transform: translateX(-100%);
+                width: 260px;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 8px 0 30px rgba(0,0,0,0.5);
+            }
+        }
+
+        /* Overlay for mobile */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 56px 0 0 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        /* Nav links */
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.7) !important;
+            border-radius: 10px;
+            margin: 3px 10px;
+            padding: 12px 16px !important;
+            transition: all 0.25s ease;
             font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        .nav-link:hover {
-            background: rgba(102, 126, 234, 0.1);
+        .sidebar .nav-link:hover {
+            background: rgba(102, 126, 234, 0.12);
             color: #fff !important;
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
-
-        .nav-link.active {
+        .sidebar .nav-link.active {
             background: var(--primary-gradient) !important;
             color: #fff !important;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
-
-        .nav-link svg,
-        .nav-link i {
-            width: 20px;
-            height: 20px;
+        .sidebar .nav-link i,
+        .sidebar .nav-link svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
 
-        /* Main Content */
-        main {
-            padding: 30px;
+        /* Sign out at bottom */
+        .sidebar .sign-out-wrapper {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--glass-border);
+        }
+        .sidebar .sign-out-btn {
+            color: rgba(255,255,255,0.6) !important;
+            transition: color 0.2s;
+        }
+        .sidebar .sign-out-btn:hover {
+            color: #dc3545 !important;
         }
 
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            padding: 24px 20px;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                padding: 30px;
+            }
+        }
+
+        /* ===== PAGE HEADER ===== */
         .page-header {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin-bottom: 24px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        @media (min-width: 768px) {
+            .page-header { padding: 24px; }
         }
 
         .page-header h1 {
@@ -96,9 +197,13 @@
             -webkit-text-fill-color: transparent;
             font-weight: 700;
             margin: 0;
+            font-size: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .page-header h1 { font-size: 1.8rem; }
         }
 
-        /* Alert */
+        /* ===== ALERT ===== */
         .alert-success {
             background: rgba(25, 135, 84, 0.1);
             border: 1px solid rgba(25, 135, 84, 0.3);
@@ -108,225 +213,236 @@
             color: #75fb93;
         }
 
-        /* Table Section */
+        /* ===== TABLE SECTION ===== */
         .table-section {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 24px;
+            padding: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            overflow-x: auto; /* scrollable on mobile */
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (min-width: 768px) {
+            .table-section { padding: 24px; }
         }
 
         .table-section h2 {
             color: #fff;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.1rem;
         }
-
         .table-section h2::before {
             content: '';
             width: 4px;
-            height: 28px;
+            height: 24px;
             background: var(--primary-gradient);
             border-radius: 2px;
+            flex-shrink: 0;
         }
 
-        /* Table */
+        /* ===== TABLE ===== */
         .table {
             color: #fff;
             margin: 0;
+            min-width: 480px; /* prevent squishing on mobile */
         }
-
         .table thead th {
             background: rgba(102, 126, 234, 0.1);
             border-color: var(--glass-border);
             color: #667eea;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             letter-spacing: 0.5px;
-            padding: 16px 12px;
+            padding: 14px 10px;
+            white-space: nowrap;
         }
-
         .table tbody tr {
             border-color: var(--glass-border);
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
         }
-
         .table tbody tr:hover {
-            background: rgba(102, 126, 234, 0.05);
-            transform: scale(1.01);
+            background: rgba(102, 126, 234, 0.06);
         }
-
         .table tbody td {
-            padding: 14px 12px;
+            padding: 12px 10px;
             vertical-align: middle;
             border-color: var(--glass-border);
+            font-size: 0.9rem;
         }
 
-        /* Badges */
+        /* ===== BADGES ===== */
         .badge-role {
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
         .badge-admin {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        /* Buttons */
+        /* ===== BUTTONS ===== */
         .btn {
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
         .btn-danger {
             background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
             border: none;
+            font-size: 0.82rem;
+            padding: 6px 12px;
         }
-
         .btn-danger:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(25, 25, 46, 1); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-gradient); border-radius: 4px; }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(25, 25, 46, 1);
+        /* Navbar user info — hide on very small screens */
+        .navbar-user {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
         }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 4px;
-        }
-
-        @media (max-width: 767.98px) {
-            .sidebar {
-                position: fixed;
-                top: 56px;
-                left: 0;
-                width: 100%;
-                height: calc(100vh - 56px);
-                background: rgba(20, 20, 35, 0.95) !important;
-            }
+        @media (max-width: 400px) {
+            .navbar-user .user-name { display: none; }
         }
     </style>
 </head>
 
 <body>
-    {{-- SVG Icons --}}
+    {{-- SVG sprite --}}
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="house-fill" viewBox="0 0 16 16">
-            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"></path>
-            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"></path>
+            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
         </symbol>
         <symbol id="file-earmark" viewBox="0 0 16 16">
-            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"></path>
+            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
         </symbol>
         <symbol id="door-closed" viewBox="0 0 16 16">
-            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"></path>
-            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"></path>
-        </symbol>
-        <symbol id="list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
         </symbol>
     </svg>
 
-    {{-- Header --}}
-    <header class="navbar sticky-top flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="{{ route('admin') }}">
+    {{-- NAVBAR --}}
+    <header class="navbar sticky-top shadow">
+        <a class="navbar-brand" href="{{ route('admin') }}">
             <i class="bi bi-people-fill me-2"></i>Social Media
         </a>
 
-        <ul class="navbar-nav flex-row d-md-none">
-            <li class="nav-item text-nowrap">
-                <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
-                    <svg class="bi"><use xlink:href="#list"></use></svg>
-                </button>
-            </li>
-        </ul>
+        {{-- Mobile hamburger --}}
+        <button class="navbar-toggler-custom d-md-none ms-auto me-2" id="sidebarToggle" aria-label="Toggle sidebar">
+            <i class="bi bi-list"></i>
+        </button>
 
-        <div class="navbar-nav px-3">
-            <span class="text-white-50">
-                <i class="bi bi-person-circle me-2"></i>{{ Auth::user()->name }}
-            </span>
+        {{-- User info --}}
+        <div class="navbar-user d-flex align-items-center gap-2">
+            <i class="bi bi-person-circle"></i>
+            <span class="user-name">{{ Auth::user()->name }}</span>
         </div>
     </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            {{-- Sidebar القائمة الجانبية --}}
-            <div class="sidebar col-md-3 col-lg-2 p-0 offcanvas-md offcanvas-end" id="sidebarMenu">
-                <div class="d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto h-100">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
-                                <svg class="bi"><use xlink:href="#house-fill"></use></svg>
-                                Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('posts.index') }}">
-                                <svg class="bi"><use xlink:href="#file-earmark"></use></svg>
-                                Posts
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('admin.security.*') ? 'active' : '' }}" href="{{ route('security.logs') }}">
-                                <i class="bi bi-shield-slash text-danger" style="font-size: 1.1rem;"></i>
-                                Security Logs
-                            </a>
-                        </li>
-                        <li class="nav-item mt-auto mb-3">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="nav-link d-flex align-items-center gap-2 border-0 bg-transparent sign-out-btn w-100 text-start">
-                                    <svg class="bi"><use xlink:href="#door-closed"></use></svg>
-                                    Sign out
-                                </button>
-                            </form>
-                            <style>
-                                .sign-out-btn:hover { color: #dc3545 !important; }
-                            </style>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    {{-- Sidebar overlay (mobile tap to close) --}}
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-            {{-- Main المحتوى الأساسي --}}
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-                @yield('main')
-                @yield('create')
-                @yield('show')
-            </main>
-        </div>
+    {{-- LAYOUT --}}
+    <div class="layout-wrapper">
+
+        {{-- SIDEBAR --}}
+        <nav class="sidebar" id="sidebar">
+            <ul class="nav flex-column flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                        <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                        Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('posts.index') }}">
+                        <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                        Posts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.security.*') ? 'active' : '' }}" href="{{ route('security.logs') }}">
+                        <i class="bi bi-shield-slash text-danger"></i>
+                        Security Logs
+                    </a>
+                </li>
+            </ul>
+
+            {{-- Sign out at bottom --}}
+            <div class="sign-out-wrapper px-2 pb-2">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="nav-link sign-out-btn border-0 bg-transparent w-100 text-start">
+                        <svg class="bi"><use xlink:href="#door-closed"/></svg>
+                        Sign out
+                    </button>
+                </form>
+            </div>
+        </nav>
+
+        {{-- MAIN --}}
+        <main class="main-content">
+            @yield('main')
+            @yield('create')
+            @yield('show')
+        </main>
+
     </div>
 
-    {{-- Scripts --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Auto-hide alerts after 5 seconds
+        // Sidebar toggle
+        const toggle   = document.getElementById('sidebarToggle');
+        const sidebar  = document.getElementById('sidebar');
+        const overlay  = document.getElementById('sidebarOverlay');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        toggle.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay.addEventListener('click', closeSidebar);
+
+        // Close sidebar when a nav link is tapped on mobile
+        sidebar.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) closeSidebar();
+            });
+        });
+
+        // Auto-hide alerts
         setTimeout(() => {
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
+            document.querySelectorAll('.alert').forEach(alert => {
+                new bootstrap.Alert(alert).close();
             });
         }, 5000);
     </script>
 </body>
-
 </html>
