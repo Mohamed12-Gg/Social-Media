@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'isLogin' => \App\Http\Middleware\Auth\IsLogin::class,
         ]);
         $middleware->append(\App\Http\Middleware\Log\PenTestLogger::class);
+        $middleware->trimStrings(except: []);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

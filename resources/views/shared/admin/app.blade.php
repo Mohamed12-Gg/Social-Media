@@ -54,6 +54,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .navbar-toggler-custom:hover {
             background: rgba(102, 126, 234, 0.3);
         }
@@ -85,6 +86,7 @@
             .sidebar {
                 transform: translateX(0) !important;
             }
+
             .sidebar-overlay {
                 display: none !important;
             }
@@ -100,9 +102,10 @@
                 transform: translateX(-100%);
                 width: 260px;
             }
+
             .sidebar.open {
                 transform: translateX(0);
-                box-shadow: 8px 0 30px rgba(0,0,0,0.5);
+                box-shadow: 8px 0 30px rgba(0, 0, 0, 0.5);
             }
         }
 
@@ -111,10 +114,11 @@
             display: none;
             position: fixed;
             inset: 56px 0 0 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 199;
             backdrop-filter: blur(2px);
         }
+
         .sidebar-overlay.show {
             display: block;
         }
@@ -132,16 +136,19 @@
             align-items: center;
             gap: 10px;
         }
+
         .sidebar .nav-link:hover {
             background: rgba(102, 126, 234, 0.12);
             color: #fff !important;
             transform: translateX(4px);
         }
+
         .sidebar .nav-link.active {
             background: var(--primary-gradient) !important;
             color: #fff !important;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
+
         .sidebar .nav-link i,
         .sidebar .nav-link svg {
             width: 18px;
@@ -155,10 +162,12 @@
             padding-top: 12px;
             border-top: 1px solid var(--glass-border);
         }
+
         .sidebar .sign-out-btn {
-            color: rgba(255,255,255,0.6) !important;
+            color: rgba(255, 255, 255, 0.6) !important;
             transition: color 0.2s;
         }
+
         .sidebar .sign-out-btn:hover {
             color: #dc3545 !important;
         }
@@ -187,8 +196,11 @@
             margin-bottom: 24px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
+
         @media (min-width: 768px) {
-            .page-header { padding: 24px; }
+            .page-header {
+                padding: 24px;
+            }
         }
 
         .page-header h1 {
@@ -199,8 +211,11 @@
             margin: 0;
             font-size: 1.5rem;
         }
+
         @media (min-width: 768px) {
-            .page-header h1 { font-size: 1.8rem; }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
         }
 
         /* ===== ALERT ===== */
@@ -221,11 +236,15 @@
             border-radius: 16px;
             padding: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            overflow-x: auto; /* scrollable on mobile */
+            overflow-x: auto;
+            /* scrollable on mobile */
             -webkit-overflow-scrolling: touch;
         }
+
         @media (min-width: 768px) {
-            .table-section { padding: 24px; }
+            .table-section {
+                padding: 24px;
+            }
         }
 
         .table-section h2 {
@@ -237,6 +256,7 @@
             gap: 10px;
             font-size: 1.1rem;
         }
+
         .table-section h2::before {
             content: '';
             width: 4px;
@@ -250,8 +270,10 @@
         .table {
             color: #fff;
             margin: 0;
-            min-width: 480px; /* prevent squishing on mobile */
+            min-width: 480px;
+            /* prevent squishing on mobile */
         }
+
         .table thead th {
             background: rgba(102, 126, 234, 0.1);
             border-color: var(--glass-border);
@@ -263,13 +285,16 @@
             padding: 14px 10px;
             white-space: nowrap;
         }
+
         .table tbody tr {
             border-color: var(--glass-border);
             transition: background 0.2s ease;
         }
+
         .table tbody tr:hover {
             background: rgba(102, 126, 234, 0.06);
         }
+
         .table tbody td {
             padding: 12px 10px;
             vertical-align: middle;
@@ -286,6 +311,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         .badge-admin {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -296,29 +322,44 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
+
         .btn-danger {
             background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
             border: none;
             font-size: 0.82rem;
             padding: 6px 12px;
         }
+
         .btn-danger:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
         }
 
         /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(25, 25, 46, 1); }
-        ::-webkit-scrollbar-thumb { background: var(--primary-gradient); border-radius: 4px; }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(25, 25, 46, 1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
 
         /* Navbar user info — hide on very small screens */
         .navbar-user {
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
+
         @media (max-width: 400px) {
-            .navbar-user .user-name { display: none; }
+            .navbar-user .user-name {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -327,15 +368,17 @@
     {{-- SVG sprite --}}
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="house-fill" viewBox="0 0 16 16">
-            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
-            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+            <path
+                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
         </symbol>
         <symbol id="file-earmark" viewBox="0 0 16 16">
-            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+            <path
+                d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
         </symbol>
         <symbol id="door-closed" viewBox="0 0 16 16">
-            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
-            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z" />
+            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z" />
         </symbol>
     </svg>
 
@@ -367,35 +410,42 @@
         <nav class="sidebar" id="sidebar">
             <ul class="nav flex-column flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
-                        <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                    <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
+                        href="{{ route('users.index') }}">
+                        <svg class="bi">
+                            <use xlink:href="#house-fill" />
+                        </svg>
                         Users
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('posts.index') }}">
-                        <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                    <a class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}"
+                        href="{{ route('posts.index') }}">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark" />
+                        </svg>
                         Posts
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.security.*') ? 'active' : '' }}" href="{{ route('security.logs') }}">
+                    <a class="nav-link {{ request()->routeIs('security.*') ? 'active' : '' }}"
+                        href="{{ route('security.logs') }}">
                         <i class="bi bi-shield-slash text-danger"></i>
                         Security Logs
                     </a>
                 </li>
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link logout-btn">
+                            <svg class="bi">
+                                <use xlink:href="#door-closed" />
+                            </svg>
+                            Sign Out
+                        </button>
+                    </form>
+                </li>
             </ul>
-
-            {{-- Sign out at bottom --}}
-            <div class="sign-out-wrapper px-2 pb-2">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="nav-link sign-out-btn border-0 bg-transparent w-100 text-start">
-                        <svg class="bi"><use xlink:href="#door-closed"/></svg>
-                        Sign out
-                    </button>
-                </form>
-            </div>
         </nav>
 
         {{-- MAIN --}}
@@ -410,15 +460,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Sidebar toggle
-        const toggle   = document.getElementById('sidebarToggle');
-        const sidebar  = document.getElementById('sidebar');
-        const overlay  = document.getElementById('sidebarOverlay');
+        const toggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
 
         function openSidebar() {
             sidebar.classList.add('open');
             overlay.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
+
         function closeSidebar() {
             sidebar.classList.remove('open');
             overlay.classList.remove('show');
@@ -445,4 +496,5 @@
         }, 5000);
     </script>
 </body>
+
 </html>
