@@ -358,7 +358,7 @@
         <!-- Create Post -->
         <div class="fb-post mb-4">
             <div class="p-3">
-                <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" novalidate>
+                <form action="{{ route('storePost') }}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
 
                     <div class="d-flex align-items-center gap-3 mb-3">

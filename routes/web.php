@@ -30,25 +30,25 @@ Route::middleware(['auth', 'isLogin:admin'])->prefix('admin')->group(function ()
 });
 
 // Handle file_Storage
-// الـ Storage proxy المطور والقاطع لأي لبس في مسارات السيرفر
-Route::get('/storage/{path}', function ($path) {
-    // استخدام المسار الحقيقي المباشر للمجلد العام على السيرفر
-    $fullPath = base_path("htdocs/storage/{$path}");
+// // الـ Storage proxy المطور والقاطع لأي لبس في مسارات السيرفر
+// Route::get('/storage/{path}', function ($path) {
+//     // استخدام المسار الحقيقي المباشر للمجلد العام على السيرفر
+//     $fullPath = base_path("htdocs/storage/{$path}");
 
-    // إذا لم يجد المسار الأول، جرب المسار البديل العادي احتياطاً
-    if (!File::exists($fullPath)) {
-        $fullPath = public_path("storage/{$path}");
-    }
+//     // إذا لم يجد المسار الأول، جرب المسار البديل العادي احتياطاً
+//     if (!File::exists($fullPath)) {
+//         $fullPath = public_path("storage/{$path}");
+//     }
 
-    if (!File::exists($fullPath)) {
-        abort(404, 'الملف غير موجود في المسار: ' . $fullPath);
-    }
+//     if (!File::exists($fullPath)) {
+//         abort(404, 'الملف غير موجود في المسار: ' . $fullPath);
+//     }
 
-    $file = File::get($fullPath);
-    $type = File::mimeType($fullPath);
+//     $file = File::get($fullPath);
+//     $type = File::mimeType($fullPath);
 
-    return Response::make($file, 200)->header("Content-Type", $type);
-})->where('path', '.*');
+//     return Response::make($file, 200)->header("Content-Type", $type);
+// })->where('path', '.*');
 
 // Auth (لا تحتاج login)
 Route::controller(AuthController::class)->group(function () {
@@ -66,6 +66,9 @@ Route::middleware('isLogin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/posts/{id}/like', [LikeController::class, 'toggle'])->name('posts.like');
+    
+    // Posts
+    Route::post('posts/store',[PostController::class, 'store'])->name('storePost');
 
     // Comments
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
