@@ -427,13 +427,13 @@
                         Posts
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('security.*') ? 'active' : '' }}"
                         href="{{ route('security.logs') }}">
                         <i class="bi bi-shield-slash text-danger"></i>
                         Security Logs
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
